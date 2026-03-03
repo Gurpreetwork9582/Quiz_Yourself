@@ -1,4 +1,11 @@
 import streamlit as st
+import pandas as pd
 
 
-st.file_uploader("Uplaod", type="xlsx")
+File = st.file_uploader("Uplaod", type="csv")
+
+if File:
+    df = pd.read_csv(File)
+
+
+    st.write(df)
