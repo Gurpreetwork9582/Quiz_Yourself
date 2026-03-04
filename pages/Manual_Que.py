@@ -37,3 +37,7 @@ if st.session_state.key:
     st.dataframe(df)
 
     
+if st.button("Done"):
+    df = pd.DataFrame(st.session_state.key)
+    csv = df.to_csv(index = False)
+    st.download_button("Download you excel sheet", data=csv ,file_name= "Question_File.csv")
