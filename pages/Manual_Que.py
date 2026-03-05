@@ -23,7 +23,7 @@ class Manual:
 
         self.answer = st.selectbox("Correct Answer",["A", "B", "C", "D"])
 
-        if st.button("Save Question"):
+        if st.button("Save Question", key="Save_button"):
 
             self.question = {
                 "question": self.question_text,
@@ -37,13 +37,16 @@ class Manual:
             st.session_state.key.append(self.question)
             st.success("Question saved!")
             
+            
 
         if st.session_state.key:
             df = pd.DataFrame(st.session_state.key)
             st.dataframe(df)
-
             
-        if st.button("Done"):
+        st.button("Done",key="Done_key")
+            
+            
+        if st.session_state['Done_key']:
             df = pd.DataFrame(st.session_state.key)
             csv = df.to_csv(index = False)
             st.download_button("Download you excel sheet", data=csv ,file_name= "Question_File.csv")

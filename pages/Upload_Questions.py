@@ -26,7 +26,8 @@ class Upload:
             except Exception as e:
                 st.error(f"Could not read the file: {e}")
             else:
-                st.write(df)
+                st.data_editor(df)
+                return df
 
 
 U1 =Upload()
