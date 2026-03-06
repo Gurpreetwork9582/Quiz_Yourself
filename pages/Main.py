@@ -58,8 +58,10 @@ class Game:
                 b.button(f"{self.row['option B']}",width="stretch") #getting Value in from Option B by calling the column name
                 c.button(f"{self.row['option C']}",width="stretch") #getting Value in from Option C by calling the column name
                 d.button(f"{self.row['option D']}",width="stretch") #getting Value in from Option D by calling the column name
+            
 
-
+            if st.button():
+                st.success("Thats Correct")
 
 g1 = Game()
 g1.Game_name()

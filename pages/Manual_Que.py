@@ -21,7 +21,7 @@ class Manual:
         self.option_c = st.text_input("Option C")
         self.option_d = st.text_input("Option D")
 
-        self.answer = st.selectbox("Correct Answer",["A", "B", "C", "D"])
+        self._answer = st.selectbox("Correct Answer",["A", "B", "C", "D"])
 
         if st.button("Save Question", key="Save_button"):
 
@@ -31,7 +31,7 @@ class Manual:
                 "option B": self.option_b,
                 "option C": self.option_c,
                 "option D": self.option_d,
-                "answer": self.answer 
+                "answer": self._answer 
                 }
             
             st.session_state.key.append(self.question)
