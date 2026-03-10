@@ -11,7 +11,7 @@ class Game:
     def __init__(self):
        # self.Data = Upload() #Class init of Upload from Upload_Question File
         pass
-
+    
     def Upload_Files(self):
         # let the user upload either a CSV or an Excel workbook
         self.file_types = ["csv", "xlsx", "xls"]
@@ -38,7 +38,7 @@ class Game:
 
 
 
-
+    
     def Game_name(self):
         #self.df =  #Calling function from Upload Class in Upload_Question File 
             self.df = self.Upload_Files() # made it a Panda Series so taking value in the first row only for now
