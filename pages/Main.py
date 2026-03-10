@@ -42,63 +42,68 @@ class Game:
     def Game_name(self):
         #self.df =  #Calling function from Upload Class in Upload_Question File 
             self.df = self.Upload_Files() # made it a Panda Series so taking value in the first row only for now
+            st.header("Questions",text_alignment="center")
+           
             if self.df is not None:
-                for i in range(len(self.df.index)):
-                    self.row = self.df.iloc[i]
-                    st.title(f"",text_alignment="center")
-                    
+                   
+                     
 
-                    st.header("Questions",text_alignment="center")
+                        if "Number" not in st.session_state:
+                            st.session_state.Number =0
+               
+                        # Prevent going outside dataframe
+                        if st.session_state.Number >= len(self.df):
+                            st.success("Quiz Finished!")
+                            return
 
-                    self.Alist =[]
-                    
+                        st.subheader(f"{self.df.loc[st.session_state.Number,'question']}", text_alignment="center")#getting Value in from Question by calling the column name
                         
-
-
-                    st.subheader(f"{self.row['question']}", text_alignment="center")#getting Value in from Question by calling the column name
+                        a, b =st.columns(2)
+                        c , d =st.columns(2)
+                        
+                        
+                        self.a_click=a.button(f"{self.df.loc[st.session_state.Number,'option A']}",width="stretch",key=f"A") #getting Value in from Option A by calling the column name
+                        self.b_click=b.button(f"{self.df.loc[st.session_state.Number,'option B']}",width="stretch",key=f"B") #getting Value in from Option B by calling the column name
+                        self.c_click=c.button(f"{self.df.loc[st.session_state.Number,'option C']}",width="stretch",key=f"C") #getting Value in from Option C by calling the column name
+                        self.d_click=d.button(f"{self.df.loc[st.session_state.Number,'option D']}",width="stretch",key=f"D") #getting Value in from Option D by calling the column name
                     
-                    a, b =st.columns(2)
-                    c , d =st.columns(2)
-                    
-                    
-                    self.a_click=a.button(f"{self.row['option A']}",width="stretch",key="Right_answer") #getting Value in from Option A by calling the column name
-                    self.b_click=b.button(f"{self.row['option B']}",width="stretch") #getting Value in from Option B by calling the column name
-                    self.c_click=c.button(f"{self.row['option C']}",width="stretch") #getting Value in from Option C by calling the column name
-                    self.d_click=d.button(f"{self.row['option D']}",width="stretch") #getting Value in from Option D by calling the column name
-                
-                    self.correct = self.row["answer"]
+                        self.correct = self.df.loc[st.session_state.Number,"answer"]
 
-                    if self.a_click:
-                        if self.correct == "A":
-                            st.success("Thats Correct")
-                        else:
-                            st.error("Not Correct")
-                    elif self.b_click:
-                        if self.correct == "B":
-                            st.success("Thats Correct")
-                        else:
-                            st.error("Not Correct")
-                    elif self.c_click:
-                        if self.correct == "C":
-                            st.success("Thats Correct")
-                        else:
-                            st.error("Not Correct")
-                    else :
-                        if self.correct == "D":
-                            st.success("Thats Correct")
-                        else:
-                            st.error("Not Correct")
+                        if self.a_click:
+                            if self.correct == "A":
+                                st.success("Thats Correct")
+                                st.session_state.Number +=1
+                            else:
+                                st.error("Not Correct")
+                        elif self.b_click:
+                            if self.correct == "B":
+                                st.success("Thats Correct")
+                                st.session_state.Number +=1
+                            else:
+                                st.error("Not Correct")
+                        elif self.c_click:
+                            if self.correct == "C":
+                                st.success("Thats Correct")
+                                st.session_state.Number +=1
+                            else:
+                                st.error("Not Correct")
+                        else :
+                            if self.correct == "D":
+                                st.success("Thats Correct")
+                                st.session_state.Number +=1
+                            else:
+                                st.error("Not Correct")
 
 
-                    with st.container(horizontal= True, horizontal_alignment="distribute"):
-                       self.Back= st.button("Back",icon_position="left",width="content",help="Move to the Previous question")
-                       self.forward = st.button("forward",icon_position="right",width="content",help="Move to the next question")           
-
-                    if self.Back:
-                        continue
-                    elif self.forward:
-                        continue
-
+                        with st.container(horizontal= True, horizontal_alignment="distribute"):
+                            if st.button("Back",icon_position="left",width="content",help="Move to the Previous question"):
+                                st.session_state.Number = max(0, st.session_state.Number - 1)
+                            
+                            if st.button("forward",icon_position="right",width="content",help="Move to the next question"):
+                                st.session_state.Number +=1
+                        
+        
+ 
                             
 g1 = Game()
 g1.Game_name()
