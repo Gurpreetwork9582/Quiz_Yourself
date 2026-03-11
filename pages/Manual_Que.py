@@ -41,7 +41,7 @@ class Manual:
 
         if st.session_state.key:
             df = pd.DataFrame(st.session_state.key)
-            st.dataframe(df)
+            st.data_editor(df)
             
         st.button("Done",key="Done_key")
             
