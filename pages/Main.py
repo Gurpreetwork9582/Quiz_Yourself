@@ -28,17 +28,26 @@ class Game:
                     # try to infer delimiter and encoding
                     try:
                         self.df = pd.read_csv(self.uploaded, sep=None, engine="python")
-                        self.df = self.df.reset_index(drop=True)
+                        if self.df.loc[1] is None:
+                            st.write("No data in file")
+                        else:
+                            self.df = self.df.reset_index(drop=True)
                     except Exception:
                         # fallback to common options
                         self.df = pd.read_csv(self.uploaded, encoding="ISO-8859-1", sep=";")
-                        self.df = self.df.reset_index(drop=True)
+                        if self.df.loc[1] is None:
+                            st.write("No data in file")
+                        else:
+                            self.df = self.df.reset_index(drop=True)
                 else:
                     # treat as Excel workbook
-                   self.df = pd.read_excel(self.uploaded)
-                   self.df = self.df.reset_index(drop=True)
+                    self.df = pd.read_excel(self.uploaded)
+                    if self.df.loc[1] is None:
+                            st.write("No data in file")
+                    else:
+                        self.df = self.df.reset_index(drop=True)
             except Exception as e:
-                st.error(f"Could not read the file: {e}")
+                st.error(f"Could not read the file due to: {e}")
             else:
                 pass
                 return self.df
