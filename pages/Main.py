@@ -16,7 +16,8 @@ class Game:
     def Upload_Files(self):
         # let the user upload either a CSV or an Excel workbook
         self.file_types = ["csv", "xlsx", "xls"]
-        self.uploaded = st.file_uploader("Upload questionnaire file", type=self.file_types)
+        self.uploaded = st.file_uploader("Upload questionnaire file", type=self.file_types,
+    key="uploader")
 
         if self.uploaded is not None:
             
@@ -45,9 +46,12 @@ class Game:
     @st.dialog("Come Back agaain!")
     def modal_dialog(self):
         st.write("Quiz completed! 🎉 make sure to refresh the page")
-        if st.button("Refresh Page"):
-            self.uploaded = False
+        if st.button("Upload New Quiz"):
+            st.session_state.Number = 0
+            st.session_state.pop("uploader", None)  # removes uploaded file
             st.rerun()
+            
+            
     
 
         
@@ -55,6 +59,10 @@ class Game:
         #self.df =  #Calling function from Upload Class in Upload_Question File 
             self.df = self.Upload_Files()# made it a Panda Series so taking value in the first row only for now
             st.header("Questions",text_alignment="center")
+
+            if self.df is None:
+                st.info("Upload a file to start the quiz")
+                return
            
             if self.df is not None:
                    
@@ -67,8 +75,10 @@ class Game:
                         if st.session_state.Number >= len(self.df):
                             st.success("Quiz Finished!")
                             self.modal_dialog()
-                            st.session_state.Number = 0
-                            #st.rerun()
+                            return
+                            
+                           
+                            
                             
                         st.subheader(f"{self.df.loc[st.session_state.Number,'question']}", text_alignment="center")#getting Value in from Question by calling the column name
                         
