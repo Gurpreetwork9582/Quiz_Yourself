@@ -39,13 +39,15 @@ class Game:
             except Exception as e:
                 st.error(f"Could not read the file: {e}")
             else:
-                st.data_editor(self.df)
+                pass
                 return self.df
 
     @st.dialog("Come Back agaain!")
     def modal_dialog(self):
-        st.write("Quiz completed! 🎉")
-
+        st.write("Quiz completed! 🎉 make sure to refresh the page")
+        if st.button("Refresh Page"):
+            self.uploaded = False
+            st.rerun()
     
 
         
@@ -66,7 +68,7 @@ class Game:
                             st.success("Quiz Finished!")
                             self.modal_dialog()
                             st.session_state.Number = 0
-                            st.rerun()
+                            #st.rerun()
                             
                         st.subheader(f"{self.df.loc[st.session_state.Number,'question']}", text_alignment="center")#getting Value in from Question by calling the column name
                         
@@ -84,29 +86,48 @@ class Game:
                         if self.a_click:
                             if self.correct == "A":
                                 st.success("Thats Correct")
+                                time.sleep(1.5)
                                 st.session_state.Number +=1
-                                
+                                st.rerun()
+                                     
                             else:
-                                st.error("Not Correct")
+                                st.error("Not Correct! Select again")
+                                time.sleep(1.5)
+                                st.rerun()
+
                         elif self.b_click:
                             if self.correct == "B":
-                    
+                                st.success("Thats Correct")
+                                time.sleep(1.5)
                                 st.session_state.Number +=1
-                
+                                st.rerun()
                             else:
-                                st.error("Not Correct")
+                                st.error("Not Correct! Select again")
+                                time.sleep(1.5)
+                                st.rerun()
+
+
                         elif self.c_click:
                             if self.correct == "C":
                                 st.success("Thats Correct")
+                                time.sleep(1.5)
                                 st.session_state.Number +=1
+                                st.rerun()
                             else:
-                                st.error("Not Correct")
+                                st.error("Not Correct! Select again")
+                                time.sleep(1.5)
+                                st.rerun()
+
                         elif self.d_click:
                             if self.correct == "D":
                                 st.success("Thats Correct")
+                                time.sleep(1.5)
                                 st.session_state.Number +=1
+                                st.rerun()
                             else:
-                                st.error("Not Correct")
+                                st.error("Not Correct! Select again")
+                                time.sleep(1.5)
+                                st.rerun()
 
 
                         with st.container(horizontal= True, horizontal_alignment="distribute"):
